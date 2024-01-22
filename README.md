@@ -202,3 +202,6 @@ different languages to be used together in a single application.
 11. To undeploy the application, click on the Environments tab, then select your environment, 
     then click on the Actions button, and then click on Terminate Environment.
 12. And then delete the application by going to the Applications tab.
+13. When deploying SpringBoot War file, make sure to select Tomcat as a platform when creating an environment in Elastic Beanstalk.
+14. Also, when deploying war file on Tomcat platform, make sure to add the spring.profiles.active environment variables
+    in JVM options in platform software configurations for the application to work.
