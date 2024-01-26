@@ -10,3 +10,5 @@ COPY ${JAR_FILE} app.jar
 
 # we can also provider the spring profile to use here if needed
 ENTRYPOINT ["java", "-jar", "app.jar"]
+
+EXPOSE 5000

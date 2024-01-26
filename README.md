@@ -205,3 +205,56 @@ different languages to be used together in a single application.
 13. When deploying SpringBoot War file, make sure to select Tomcat as a platform when creating an environment in Elastic Beanstalk.
 14. Also, when deploying war file on Tomcat platform, make sure to add the spring.profiles.active environment variables
     in JVM options in platform software configurations for the application to work.
+
+### Installing Elastic Beanstalk CLI
+1. Deploying a Docker image on AWS Elastic Beanstalk involves additional steps compared to previous videos. 
+2. Use AWS Elastic Beanstalk Command Line Interface (EB CLI) for deployment. 
+3. On macOS, using the EB CLI can present challenges, so a Vagrant instance is recommended for consistency. 
+4. Create a docker-compose.yml file to set up parameters for AWS EB CLI. 
+5. Edit the application.properties file to comment out server.port and management port. 
+6. make a directory using - ~/vagrant_amzn2
+   And create a Vagrant instance using `vagrant init gbailey/amzn2`
+   (Few vagrant commands-
+        1. `vagrant box list` - list of vagrant instances
+        2. `vagrant status` - to check if a instance is running
+        3. `vagrant ssh` - to ssh into the running instance
+   )
+   Zip the project using `zip -r ~/vagrant_amzn2/SpringBootProduction.zip SpringBootProduction`.
+7. Start the Vagrant instance with `vagrant up` (make sure Virtual Box is installed - the beta version is required).
+   make sure `vagrant-scp` plugin is installed to copy your zip from your directory to vagrant instance
+     use this command to install the plugin `vagrant plugin install vagrant-scp`
+   copy the zip to the Vagrant instance using `vagrant scp SpringBootProduction.zip SpringBootProduction.zip`
+8. SSH into the instance using ` vagrant ssh` command,
+   unzip the project using `unzip SpringBootProduction.zip`,
+   and update the system using `sudo yum update -y`.
+   (yum is the package management utility used on RPM-based Linux distributions)
+9. Install dependencies for AWS EB CLI using `sudo yum install -y zlib-devel openssl-devel ncurses-devel libffi-devel sqlite-devel.x86_64 readline-devel.x86_64 bzip2-devel.x86_64 unzip git`.
+10. Clone AWS EB CLI setup scripts from GitHub using `git clone https://github.com/aws/aws-elastic-beanstalk-cli-setup.git`.
+    install necessary dependency- `sudo yum install python3-pip`
+    `sudo pip3 install virtualenv`
+11. Run the AWS EB CLI setup script, which may take some time using `python ./aws-elastic-beanstalk-cli-setup/scripts/ebcli_installer.py`.
+    [ ABOVE DIDN'T WORK ]
+    install necessary dependency- `sudo yum install python3-pip`
+    To install AWS EB CLI - `sudo pip3 install --upgrade --user --no-cache-dir awsebcli`
+12. Verify EB CLI installation with eb --version. 
+13. Now ready to use AWS EB CLI for deploying Docker images.
+
+### Deploying docker image on elastic beanstalk using eb cli
+1. Make sure AWS Elastic Beanstalk Command Line Interface (EBCLI) is installed.
+2. Ensure Vagrant is started. Run `sudo yum install ntp ntpdate -y` and then `sudo ntpdate pool.ntp.org` to sync system time.
+   Time synchronization in virtual machines (VMs) is vital for ensuring accurate timestamps on logs, files, and system
+   activities. It plays a key role in security protocols, preventing replay attacks, and facilitating proper authentication
+   and authorization mechanisms that rely on time-based tokens. In distributed systems, synchronized time is essential
+   for coordinating actions among different servers and services. It also aids in troubleshooting by providing consistent
+   logging and event correlation across multiple systems. Overall, time synchronization is crucial for maintaining a
+   secure and well-coordinated computing environment.
+3. Verify that the "SpringBootProduction" zip is unzipped. Navigate to the directory using `cd SpringBootProduction`.
+4. Run `eb init` to configure the project for Elastic Beanstalk.
+5. Select default region (e.g., US east 2). Provide AWS access ID and secret access key obtained from AWS console.
+6. Choose application or create a new one. Confirm Docker usage.
+7. Run `eb create` for default deployment. Accept DNS and CNAME prefix. Choose load balancer and optional spot fleet request.
+   Observe EBCLI output for source and Docker image upload progress (make sure you navigate to the correct region to see the progress).
+8. Monitor progress in AWS Elastic Beanstalk on the AWS Console. Review logging statements for insights into Elastic Beanstalk actions.
+9. Address health issues by setting environment variables. Use `eb setenv SPRING_PROFILES_ACTIVE=dev,beanstalk`.
+10. Navigate to AWS Console, go to configuration, and edit. Add server port (e.g., 5000) and click apply.
+11. Check the AWS console for updated health status and environment details. Ensure the application is visible in the AWS environment.
