@@ -28,6 +28,8 @@ jobs:
       with:
         java-version: '11'
         distribution: 'temurin'
+      env:
+        RUNNER_TOOL_CACHE: "/opt/hostedtoolcache"
     - name: Build with Gradle
       run: ./gradlew build
     - name: Create Timestamp for version info
@@ -35,9 +37,13 @@ jobs:
       uses: nanzm/get-time-action@v1.1
       with:
         format: 'YYYY-MM-DD-HH-mm-ss'
+      env:
+        RUNNER_TOOL_CACHE: "/opt/hostedtoolcache"
     - name: Make Artifact Available
       uses: actions/upload-artifact@v2
       with:
         name: "Artifact-${{steps.time.outputs.time}}"  #used to access special variables in GitHub
         path: build/libs
         retention-days: 5
+      env:
+        RUNNER_TOOL_CACHE: "/opt/hostedtoolcache"
