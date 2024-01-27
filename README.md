@@ -303,3 +303,15 @@ different languages to be used together in a single application.
 13. First GitHub Action Completed: By following the steps, users can create their first GitHub action, demonstrating the
     successful automation of a testing and building process in the workflow.
 
+### Configuring GitHub Actions to build springboot artifact
+1. Create a new branch named "jar_workflow_aws" using Git. Push this new branch to your GitHub repository. This
+   establishes version control and collaboration.
+2. Open the GitHub workflows gradle file and rename it to "build-package-deploy.aws" for clarity. Commit this change to
+   version control.
+3. Add GitHub actions for creating a timestamp and making the artifact available for download. The timestamp aids
+   versioning and tracking JARs in AWS. Use pre-built GitHub actions for these steps.
+4. Test the YAML file against the "jar_workflow_aws" branch by temporarily modifying the branch name in the workflow
+   file. Ensure proper formatting and set a retention period for artifacts.
+5. Push the changes to the "jar_workflow_aws" branch on GitHub. Monitor the GitHub Actions workflow execution to verify
+   the successful creation of artifacts with timestamps.
+
