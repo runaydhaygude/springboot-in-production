@@ -2,10 +2,10 @@
 .gradle/
 build.gradle
 build/
-gradle/
-#gradlew
-#gradlew.bat
-#settings.gradle
+#gradle/
+gradlew
+gradlew.bat
+settings.gradle
 
 # Ignore IntelliJ IDEA project files
 .idea/
