@@ -315,3 +315,22 @@ different languages to be used together in a single application.
 5. Push the changes to the "jar_workflow_aws" branch on GitHub. Monitor the GitHub Actions workflow execution to verify
    the successful creation of artifacts with timestamps.
 
+### Explaining gradle.yml in /github/workflow
+1. name: Specifies the name of the workflow, which is "Java CI with Gradle."
+2. on: Defines the events that trigger the workflow.
+3. Triggered on push events to the branch "jar_workflow_aws."
+4. Triggered on pull requests to the branch "one."
+5. permissions: Specifies the level of access to repository contents needed for the workflow. In this case, it requires
+   read access.
+6. jobs: Defines the list of jobs to be executed.
+7. build: Describes the build job.
+8. runs-on: Specifies the operating system for the job, in this case, "ubuntu-latest."
+9. steps: Lists the individual steps to be executed in the job.
+10. actions/checkout@v3: Checks out the repository code.
+11. actions/setup-java@v3: Sets up JDK 11 using the Temurin distribution.
+12. run: ./gradlew build: Builds the project using Gradle.
+13. nanzm/get-time-action@v1.1: Creates a timestamp for version information.
+14. actions/upload-artifact@v2: Uploads the built JAR artifact to GitHub.
+15. name: Specifies the name of the artifact using a timestamp.
+16. path: Specifies the path to the JAR file.
+
