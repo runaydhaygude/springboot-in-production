@@ -334,3 +334,18 @@ different languages to be used together in a single application.
 15. name: Specifies the name of the artifact using a timestamp.
 16. path: Specifies the path to the JAR file.
 
+### Deploying jar file to elastic beanstalk with GitHub Actions
+1. Deploying a JAR file to Elastic Beanstalk using GitHub Actions involves several steps for setup and configuration.
+2. Begin by navigating to the AWS console and accessing security credentials to obtain the AWS access key ID and secret
+   access key.
+3. To ensure a clean slate, terminate existing environments and delete applications in Elastic Beanstalk.
+4. Create a new application named "SpringBootProdApp" with the Java platform and Corretto 11.
+5. Configure environment properties by setting server_port to 5000 and SPRING_PROFILES_ACTIVE to "prod."
+6. Create GitHub secrets for AWS access key ID and secret access key in the repository settings.
+7. Load the GitHub workflow file named "beanstalk-deploy" in IntelliJ and make necessary adjustments.
+8. Configure the workflow with AWS access key ID, secret access key, application name, environment name, version label,
+   region, and deployment package details.
+9. Change the action trigger back to the main branch.
+10. Save and push the changes to the GitHub repository, create a pull request, and merge it.
+11. Monitor the GitHub Actions workflows to ensure successful execution.
+12. Check the Elastic Beanstalk environment to view updates and verify the application deployment.
